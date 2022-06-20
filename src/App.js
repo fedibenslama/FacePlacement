@@ -4,8 +4,10 @@ import Logo from './Componants/Logo/Logo';
 import ImageLinkForm from './Componants/ImageLinkForm/ImageLinkForm';
 import Rank from './Componants/Rank/Rank';
 import { Component } from 'react';
+import Signin from './Componants/Signin/Signin';
 import Clarifai from 'clarifai';
 import Particle from './Componants/Particle';
+import Register from './Componants/Register/Register';
 import FaceRecognition from './Componants/FaceRecognition/FaceRecognition';
 
 const app = new Clarifai.App({
@@ -19,6 +21,8 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
+      route: 'signin',
+      IsSignedIn:false
     }
   }
   CalculateFaceLocation = (data) => {
@@ -48,18 +52,36 @@ class App extends Component {
       .catch(err => console.log(err));
 
   }
+  onRouteChange = (route) => {
+    if (this.state.route==='home'){
+      this.setState({IsSignedIn:false})
+    }
+    else if (this.state.route==='signin'){
+      this.setState({IsSignedIn:true})
+    }
+    this.setState({ route: route })
+  }
   render() {
-
+    
+    // const {IsSignedIn,imageUrl,route,box} = this.state;
 
     return (
       <div className="App">
-        <Navigation />
-        <Logo />
         <Particle />
-        <Rank />
-        <ImageLinkForm onInputChange={this.onInputChange} onClickChange={this.onClickChange} />
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+        <Navigation IsSignedIn={this.state.IsSignedIn} onRouteChange={this.onRouteChange} />
+        {this.state.route === 'home'
+          ? <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm onInputChange={this.onInputChange} onClickChange={this.onClickChange} />
+            <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+          </div>
+          : (this.state.route === 'signin')
+            ? < Signin onRouteChange={this.onRouteChange} />
+            : < Register onRouteChange={this.onRouteChange} />
 
+
+        }
 
       </div>
     );
