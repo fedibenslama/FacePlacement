@@ -10,6 +10,8 @@ import Particle from './Componants/Particle';
 import Register from './Componants/Register/Register';
 import FaceRecognition from './Componants/FaceRecognition/FaceRecognition';
 
+
+
 const app = new Clarifai.App({
   apiKey: 'd4be8e0aa00c4940b820c42d24dd40f7'
 });
@@ -22,9 +24,11 @@ class App extends Component {
       imageUrl: '',
       box: {},
       route: 'signin',
-      IsSignedIn:false
+      IsSignedIn: false
     }
   }
+
+
   CalculateFaceLocation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
     const image = document.getElementById('inputimage')
@@ -53,16 +57,16 @@ class App extends Component {
 
   }
   onRouteChange = (route) => {
-    if (this.state.route==='home'){
-      this.setState({IsSignedIn:false})
+    if (this.state.route === 'home') {
+      this.setState({ IsSignedIn: false })
     }
-    else if (this.state.route==='signin'){
-      this.setState({IsSignedIn:true})
+    else if (this.state.route === 'signin') {
+      this.setState({ IsSignedIn: true })
     }
     this.setState({ route: route })
   }
   render() {
-    
+
     // const {IsSignedIn,imageUrl,route,box} = this.state;
 
     return (
