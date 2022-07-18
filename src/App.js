@@ -13,7 +13,7 @@ import FaceRecognition from './Componants/FaceRecognition/FaceRecognition';
 
 
 const app = new Clarifai.App({
-  apiKey: 'd4be8e0aa00c4940b820c42d24dd40f7'
+  // apiKey: 'Put ur Clarifai API key here, it's free'
 });
 
 class App extends Component {
